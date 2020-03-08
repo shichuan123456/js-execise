@@ -24,14 +24,15 @@ function scoreRes(scores) {
 
 // 代替数组的reverse方法
 function reverse(arr){
+  // return arr.reduceRight((t,v) => [...t, v] , [])
   return arr.reduceRight((t,v) => (t.push(v), t) , [])
 }
 // console.log(reverse([1,2,3,4,5]));
 
 //代替map和filter
-const arr = [0, 1, 2, 3];
-const a = arr.map(v => v * 2).filter(v => v > 2);
-const b = arr.reduce((t,v) => (v * 2 > 2 ? [...t, v * 2] : t), []) // 扩展运算符进行数组的添加更直观
+// const arr = [0, 1, 2, 3];
+// const a = arr.map(v => v * 2).filter(v => v > 2);
+// const b = arr.reduce((t,v) => (v * 2 > 2 ? [...t, v * 2] : t), []) // 扩展运算符进行数组的添加更直观
 // console.log(a, b);
 const scores = [
   { score: 45, subject: "chinese" },
@@ -39,11 +40,11 @@ const scores = [
   { score: 60, subject: "english" }
 ];
 
-console.log(scores.some(item => item.score > 80));
-console.log(scores.reduce((t,v) => t || v.score > 80, false));
+// console.log(scores.some(item => item.score > 80));
+// console.log(scores.reduce((t,v) => t || v.score > 80, false));
 
-console.log(scores.every(item => item.score > 80));
-console.log(scores.reduce((t,v) => t && v.score > 80, true));
+// console.log(scores.every(item => item.score > 80));
+// console.log(scores.reduce((t,v) => t && v.score > 80, true));
 
 // 数组分割
 
@@ -67,7 +68,7 @@ function difference(arr, oarr){
 
 // 数组过滤
 // const arr = [0, 1, 2, 3, 4, 5, 6];
-fill(arr, "aaa", 2, 5); // [0, 1, "aaa", "aaa", "aaa", 5, 6]
+// fill(arr, "aaa", 2, 5); // [0, 1, "aaa", "aaa", "aaa", 5, 6]
 
 function fill(arr = [], val = "", start = 0, end = arr.length) {
   if (start < 0 || start >= end || end > arr.length) return arr;
@@ -78,9 +79,12 @@ function fill(arr = [], val = "", start = 0, end = arr.length) {
   ];
 }
 
-
-
-
+// 数组扁平
+// const arr1 = [0, 1, [2, 3], [4, 5, [6, 7]], [8, [9, 10, [11, 12]]]];
+// console.log(Flat(arr1)) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+function Flat(arr1) {
+  return arr1.reduce((t,v) => t.concat(Array.isArray(v) ? Flat(t): v),[])
+}
 
 // 数组去重
 /* const arr3 = [2, 1, 0, 3, 2, 1, 2];
@@ -101,8 +105,43 @@ function Max(arr3) {
 function Min(arr3) {
   return arr3.reduce((t, v) => t > v ? v : t)
 }
+// console.log(Max(arr3), Min(arr3))
 
-console.log(Max(arr3), Min(arr3))
+// 数组成员独立拆解
+/* const arr1 = [["a", 1, true], ["b", 2, false]];
+console.log(Unzip(arr1)); // [["a", "b"], [1, 2], [true, false]]
+function Unzip(arr1) {
+  return arr1.reduce((t,v) => (v.forEach((item, i) => t[i].push(item)),t),
+    Array.from({length: Math.max(...arr1.map(v => v.length))}).map( v => []) // 不可以用fill，不然会整体操作，用map不会有问题
+  )
+} */
+
+// 数组成员个数统计
+/* const arr1 = [0, 1, 1, 2, 2, 2, 2];
+console.log(Count(arr1)); // { 0: 1, 1: 2, 2: 3 }
+function Count(arr1) {
+  return arr1.reduce((t, v) => (t[v] = (t[v] || 0) + 1, t),{}) // 这个赋值挺简洁
+} */
+
+// 数组成员位置
+/* const arr = [2, 1, 5, 4, 2, 1, 6, 6, 7];
+console.log(Position(arr, 2)); // [0, 4]
+function Position(arr, target) {
+  return arr.reduce((t, v, i) => target === v ? [...t, i] : t, [])
+} */
+// 数组成员分组
+/* const arr = [
+  { area: "GZ", name: "YZW", age: 27 },
+  { area: "GZ", name: "TYJ", age: 25 },
+  { area: "SZ", name: "AAA", age: 23 },
+  { area: "FS", name: "BBB", age: 21 },
+  { area: "SZ", name: "CCC", age: 19 }
+]; // 以地区area作为分组依据
+console.log(Group(arr, "area")); // { GZ: Array(2), SZ: Array(2), FS: Array(1) }
+function Group(arr = [], key) {
+  return key ? arr.reduce((t, v) => (!t[v[key]] && (t[v[key]] = []), t[v[key]].push(v), t), {}) : {};
+} */
+
 
 //URL参数反序列化
 function ParseUrlSearch(searchUrl) {

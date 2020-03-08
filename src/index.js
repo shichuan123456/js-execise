@@ -83,6 +83,11 @@ function isPrimitive (value){
   )
 }
 
+function toNumber(val) {
+  var n = parseFloat(val)
+  return isNaN(n) ? val : n;
+}
+
 function isRegExp (v) {
   return Object.prototype.toString.call(v) === '[object RegExp]'
 }
