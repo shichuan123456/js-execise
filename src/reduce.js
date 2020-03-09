@@ -142,18 +142,95 @@ function Group(arr = [], key) {
   return key ? arr.reduce((t, v) => (!t[v[key]] && (t[v[key]] = []), t[v[key]].push(v), t), {}) : {};
 } */
 
+// 关键字统计
+/* const text = [
+  "今天天气真好，我想出去钓鱼",
+  "我一边看电视，一边写作业",
+  "小明喜欢同桌的小红，又喜欢后桌的小君，真TM花心",
+  "最近上班喜欢摸鱼的人实在太多了，代码不好好写，在想入非非"
+];
+const keyword = ["偷懒", "喜欢", "睡觉", "摸鱼", "真好", "一边", "明天"];
+console.log(Keyword(text, keyword)); // ["喜欢", "摸鱼", "真好", "一边"]
+function Keyword(text, keys) {
+  return keys.reduce((t,v) => text.some(item => item.includes(v)) ? [...t, v] : t, [])
+} */
 
-//URL参数反序列化
-function ParseUrlSearch(searchUrl) {
+// 字符串反转
+/* const str = "reduce最牛逼";
+console.log(ReverseStr(str)); // "逼牛最ecuder"
+function ReverseStr(str) {
+  return str.split("").reduceRight((t,v) => [...t, v], []).join("");
+}
+ */
+
+ // 数字千分化
+function ThousandNum(num = 0) {
+  const str = (+num).toString().split(".");
+  const int = nums => nums.split("").reverse().reduceRight((t, v, i) => t + (i % 3 ? v : `${v},`), "").replace(/^,|,$/g, "");
+  const dec = nums => nums.split("").reduce((t, v, i) => t + ((i + 1) % 3 ? v : `${v},`), "").replace(/^,|,$/g, "");
+  return str.length > 1 ? `${int(str[0])}.${dec(str[1])}` : int(str[0]);
+}
+
+// 斐波那契数列
+// Fibonacci(10); // [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+// function Fibonacci(len = 2) {
+//   const arr = [...new Array(len).keys()];
+//   return arr.reduce((t, v, i) => (i > 1 && t.push(t[i - 1] + t[i - 2]), t), [0, 1]);
+// }
+
+
+// URL参数反序列化
+/* function ParseUrlSearch(searchUrl) {
   return searchUrl.replace(/(^\?)|(&$)/g, "").split("&").reduce((t,v) => {
     const [key, value] = v.split("=");
     t[key] = decodeURIComponent(value);
     return t;
   }, {})
 }
-
 console.log(ParseUrlSearch("?age=25&name=TYJ"));
 
+// URL参数序列化
+
+function StringifyUrlSearch(search = {}) {
+  return Object.entries(search).reduce(
+      (t, v) => `${t}${v[0]}=${encodeURIComponent(v[1])}&`,
+      Object.keys(search).length ? "?" : ""
+  ).replace(/&$/, "");
+}
+
+StringifyUrlSearch({ age: 27, name: "YZW" }); // "?age=27&name=YZW" */
+
+// 返回对象指定键值
+/* const target = { a: 1, b: 2, c: 3, d: 4 };
+const keyword = ["a", "d"];
+GetKeys(target, keyword); // { a: 1, d: 4 }
+
+function GetKeys(obj = {}, keys = []) {
+  return Object.keys(obj).reduce((t, v) => (keys.includes(v) && (t[v] = obj[v]), t), {});
+}
+ */
+// 数组转对象
+/* const people = [
+  { area: "GZ", name: "YZW", age: 27 },
+  { area: "SZ", name: "TYJ", age: 25 }
+];
+
+const map = people.reduce((t, v) => {
+  const { name, ...rest } = v;
+  t[name] = rest;
+  return t;
+}, {}); // { YZW: {…}, TYJ: {…} } */
 
 
-
+/* // Redux Compose函数原理
+function Compose(...funs) {
+  if (funs.length === 0) {
+      return arg => arg;
+  }
+  if (funs.length === 1) {
+      return funs[0];
+  }
+  return funs.reduce((t,v) => (...args) => t(v(...args)))
+}
+ */
