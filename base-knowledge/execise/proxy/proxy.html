@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /* 
+  一个简单的代理模式，在正式图片拉取回来之前添加一个展位图
+*/
+
+    const imgNode = (() => {
+      const imgNode = document.createElement('img');
+      document.body.appendChild(imgNode);
+      return {
+        setSrc(src) {
+          imgNode.src = src
+        }
+      }
+    })()
+
+    const proxyImg = (() => {
+      const img = new Image()
+      img.onload = () => imgNode.setSrc(img.src) 
+      return {
+        setSrc(src) {
+          imgNode.setSrc("./placeholder.jpg");
+          setTimeout(() => img.src = src , 500) 
+        }
+      }
+    })()
+
+    proxyImg.setSrc("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1035415831,1465727770&fm=26&gp=0.jpg")
+  </script>
+</body>
+
+</html>
