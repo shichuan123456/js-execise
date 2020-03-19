@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 学习 https://juejin.im/post/5e725563f265da57602c6eb6 小结
+  
+
+    Function.prototype.makeMulti = function () {
+      console.log(this)
+      let l = new String(this)
+      l = l.substring(l.indexOf("/a") + 3, l.lastIndexOf("a/"))
+      console.log(l)
+      return l
+    }
+
+    let string = function () {
+      return a = `.__        ___.           
+|  | _____ \_ |__   ____  
+|  | \__  \ | __ \ /  _ \ 
+|  |__/ __ \| \_\ (  <_> )
+|____(____  /___  /\____/ 
+          \/    \/    `
+          
+    }
+    console.log(string.makeMulti());
+  </script>
+</body>
+
+</html>
+
+
+
+
+ 
+
+  
